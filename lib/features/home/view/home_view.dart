@@ -147,19 +147,21 @@ class _HomeViewState extends State<HomeView> {
                                                 model.selectedProduct?.id ==
                                                         prod.id
                                                     ? Padding(
-                                                      padding: const EdgeInsets.all(8.0),
-                                                      child: SizedBox(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: SizedBox(
                                                           width: 35,
                                                           height: 35,
                                                           child:
                                                               SpinKitSpinningLines(
-                                                            color:
-                                                                Theme.of(context)
-                                                                    .primaryColor,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .primaryColor,
                                                             size: 50.0,
                                                           ),
                                                         ),
-                                                    )
+                                                      )
                                                     : IconButton(
                                                         onPressed: () => model
                                                             .addProduct(prod),
@@ -241,84 +243,102 @@ class _HomeViewState extends State<HomeView> {
         duration: Duration(milliseconds: 350),
         left: 0,
         right: 0,
-        bottom: basketModel.hasCard ? 0 : -100,
-        curve: Curves.easeOut,
-        child: InkWell(
-          onTap: () {
-            Navigator.of(context).pushNamed("basket");
-          },
-          child: ClipPath(
-            clipper: CardClipper(),
-            child: Container(
-              height: context.customHeightValue(0.2),
-              width: double.infinity,
-              color: Colors.black,
-              padding: EdgeInsets.only(top: 75, left: 25, right: 25),
-              child: AnimatedOpacity(
-                opacity: basketModel.showCart ? 1 : 0,
-                duration: const Duration(milliseconds: 350),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        bottom: basketModel.hasCard ? 0 : -200,
+        curve: Curves.easeInOutQuart,
+        child: ClipPath(
+          clipper: CardClipper(),
+          child: Container(
+            height: context.customHeightValue(0.2),
+            width: double.infinity,
+            color: Colors.black,
+            child: AnimatedOpacity(
+              opacity: basketModel.showCart ? 1 : 0,
+              duration: const Duration(milliseconds: 350),
+              child: Center(
+                child: Column(
                   children: [
-                    Hero(
-                      tag: "title",
-                      child: SizedBox(
-                        width: context.customWidthValue(0.25),
-                        child: const Text(
-                          "Cart",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                    Expanded(
+                      flex: 2,
+                      child: SizedBox(),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).pushNamed("basket");
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 25, right: 25),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Hero(
+                                tag: "title",
+                                child: SizedBox(
+                                  width: context.customWidthValue(0.25),
+                                  child: const Text(
+                                    "Cart",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children:
+                                        basketModel.showMiniCardProducts.map(
+                                      (p) {
+                                        return Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8.0),
+                                          child: CircleAvatar(
+                                            backgroundColor: Colors.white,
+                                            child: Image.asset(p.image.toPng),
+                                          ),
+                                        );
+                                      },
+                                    ).toList(),
+                                  ),
+                                  if (basketModel.products.length > 3)
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Icon(
+                                        Icons.more_horiz,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 15.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            width: 2),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      padding: EdgeInsets.all(10),
+                                      child: Center(
+                                        child: Icon(
+                                          Icons.arrow_forward,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
                           ),
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: basketModel.showMiniCardProducts.map(
-                            (p) {
-                              return Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.white,
-                                  child: Image.asset(p.image.toPng),
-                                ),
-                              );
-                            },
-                          ).toList(),
-                        ),
-                        if (basketModel.products.length > 3)
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Icon(
-                              Icons.more_horiz,
-                              color: Colors.white,
-                            ),
-                          ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Theme.of(context).primaryColor,
-                                  width: 2),
-                              shape: BoxShape.circle,
-                            ),
-                            padding: EdgeInsets.all(10),
-                            child: Center(
-                              child: Icon(
-                                Icons.arrow_forward,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    )
                   ],
                 ),
               ),
@@ -331,10 +351,11 @@ class _HomeViewState extends State<HomeView> {
 
   AppBar buildAppBar() {
     return AppBar(
-      leading: const Padding(
+      leading: Padding(
         padding: EdgeInsets.only(left: 15.0),
         child: CircleAvatar(
-          backgroundColor: Colors.cyan,
+          backgroundColor: Color(0xFF5f3498),
+          child: SizedBox(width: 25, height: 25, child: Image.asset("man".toIcon),),
         ),
       ),
       title: AnimatedOpacity(

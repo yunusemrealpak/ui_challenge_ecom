@@ -107,6 +107,7 @@ class BasketView extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -128,19 +129,20 @@ class BasketView extends StatelessWidget {
                         ),
                       ],
                     ),
+                    SizedBox(height: 15),
                     Container(
-                      width: context.customWidthValue(0.85),
+                      width: context.customWidthValue(0.65),
                       margin: const EdgeInsets.all(10),
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border:
-                              Border.all(color: context.theme.primaryColor)),
-                      child: Center(
+                        borderRadius: BorderRadius.circular(15),
+                        color: context.theme.primaryColor
+                      ),
+                      child: const Center(
                         child: Text(
                           "NEXT",
                           style: TextStyle(
-                            color: context.theme.primaryColor,
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 25,
                           ),
